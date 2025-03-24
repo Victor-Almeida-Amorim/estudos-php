@@ -1,0 +1,36 @@
+<?php
+    require __DIR__ ."/src/funcoes.php";
+
+    $filme = criarFilme(
+        "Top Gun - Maverick",
+        2022,
+        0,
+        false,
+        '',
+    );
+    
+    $quantidadeNotas = $argc-1;
+    $notas = [];
+    for ($i = 0; $i<$quantidadeNotas; $i++){
+        $notas[] = (float) $argv[$i+1];
+    }
+
+
+    $filme["notaFilme"] = array_sum($notas) / $quantidadeNotas;
+
+
+    exibeMensagemLancamento($filme["anoLancamento"]);
+
+    $filme["genero"] = match ($filme["nomeFilme"]) {
+        "Top Gun - Maverick" => "Ação",
+        "It - A Coisa" => "Terror",
+        default => "Desconhecido",
+    };
+
+    $filmeJson = json_encode($filme);
+
+    file_put_contents(__DIR__ . "/filme.json", $filmeJson);
+
+    $jsonLido = file_get_contents(__DIR__ . "/filme.json");
+
+    echo "\n" . $jsonLido;
