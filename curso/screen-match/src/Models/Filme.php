@@ -1,31 +1,22 @@
 <?php
+namespace ScreenMatch\Models;
 
-    class Filme {
-        public readonly string $nome;
-        public readonly int $ano;
-        public readonly Genero $genero;
-        private array $notas;
+    class Filme extends Titulo{
+        private readonly int $duracao;
 
         public function __construct(
             string $nome,
             int $ano,
             Genero $genero,
+            int $duracao,
         ) {
-            $this -> nome = $nome;
-            $this -> ano = $ano;
-            $this -> genero = $genero;
-            $this -> notas = [];
-        }
-
-        public function avalia(float $nota) : void {
-            $this->notas[] = $nota;
-        }
-
-        public function nota() : float{
-            $soma = array_sum($this->notas);
-            $cont = count($this->notas);
-
-            return $soma/$cont;
+            parent::__construct($nome, $ano, $genero);
+            $this->duracao = $duracao;
         }
         
+        #[Override]
+        public function duracao() : int{
+            return $this->duracao;
+        }
+
     }
